@@ -17,7 +17,7 @@ public class AuthService {
     @Autowired
     private JavaMailSender emailSender;
 
-    public String registerUser(String email, String password) {
+   /* public String registerUser(String email, String password) {
         User user = new User();
         user.setEmail(email);
         user.setPassword(password);
@@ -36,24 +36,10 @@ public class AuthService {
             return true;
         }
         return false;
-    }
+    }*/
 
-    public String forgotPassword(String email) {
-        User user = userRepository.findByEmail(email);
-        if (user != null) {
-            String otp = OTPUtils.generateOTP();
-            sendOTPToEmail(email, otp);
-            return otp;  // Return OTP for password reset
-        }
-        return null;
-    }
 
-    public void sendOTPToEmail(String email, String otp) {
-        SimpleMailMessage message = new SimpleMailMessage();
-        message.setTo(email);
-        message.setSubject("Your OTP Code");
-        message.setText("Your OTP code is: " + otp);
-        emailSender.send(message);
-    }
+
+
 }
 

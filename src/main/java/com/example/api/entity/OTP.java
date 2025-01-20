@@ -1,11 +1,11 @@
 package com.example.api.entity;
 
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import lombok.*;
-import org.springframework.data.annotation.Id;
+import org.hibernate.annotations.DynamicInsert;
 
 @Entity
 @Getter
@@ -13,13 +13,9 @@ import org.springframework.data.annotation.Id;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-public class User {
+public class OTP {
 
-    @jakarta.persistence.Id
     @Id
     private String email;
-
-    private String password;
-    private boolean isActive;
-
+    private String value;
 }
