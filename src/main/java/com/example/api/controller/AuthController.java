@@ -18,6 +18,8 @@ import org.springframework.stereotype.Controller;
 
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 @RestController
@@ -47,7 +49,9 @@ public class AuthController {
         userRepository.save(user);
         String otp = OTPUtils.generateOTP();
         otpService.sendOTPToEmail(user.getEmail(), otp);
-        return new ResponseEntity<>("Registration successful, OTP sent to email", HttpStatus.CREATED);
+        Map<String, String> response = new HashMap<>();
+        response.put("message", "Registration successful, OTP sent to email");
+        return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
     @PostMapping("/login")
@@ -59,7 +63,9 @@ public class AuthController {
                     "Email or password is incorrect.");
             return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
         }
-        return new ResponseEntity<>("Login ", HttpStatus.CREATED);
+        Map<String, String> response = new HashMap<>();
+        response.put("message", "Login");
+        return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
     @PostMapping("/forget")
@@ -73,7 +79,9 @@ public class AuthController {
             userRepository.save(existingUser);
             System.out.println(newpass);
         }
-        return new ResponseEntity<>("Please check your email ", HttpStatus.CREATED);
+        Map<String, String> response = new HashMap<>();
+        response.put("message", "Please check your email");
+        return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
     @PostMapping("/active")
@@ -85,7 +93,9 @@ public class AuthController {
                 existingUser.setActive(true);
                 userRepository.save(existingUser);
                 otpRepository.delete(existingOTP);
-                return new ResponseEntity<>("Your account is active", HttpStatus.CREATED);
+                Map<String, String> response = new HashMap<>();
+                response.put("message", "Your account is active");
+                return new ResponseEntity<>(response, HttpStatus.CREATED);
             }
         }
         ErrorResponse error = new ErrorResponse(HttpStatus.BAD_REQUEST.value(),
